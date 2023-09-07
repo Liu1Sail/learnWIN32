@@ -10,20 +10,18 @@
  * @类型 HWND: Windows是对象,它们同时具有代码和数据，但它们不是 C++ 类。 相反，程序通过使用称为 句柄的值来引用窗口。 句柄是不透明的类型。 从本质上讲，它只是操作系统用来标识对象的数字。 你可以将 Windows 想象成有一个大表，其中包含已创建的所有窗口。 它使用此表按句柄查找窗口。
  */
 
- /**
- * @参数 hInstance 当前模块实例句柄
- * @参数 szCmdLine 字符串的形式包含命令行参数。
- * @参数 nCmdShow 是一个标志，指示主应用程序窗口是最小化、最大化还是正常显示.
- * */
-
 /**
- * @窗口创建步骤 1.   创建并注册窗口类(WNDCLASS)
+ * @窗口创建步骤 1.   创建并注册窗口类(WNDCLASS)(RegisterClass)
  * @窗口创建步骤 2.   创建窗口(CreateWindow)
  * @窗口创建步骤 3.   显示窗口(ShowWindow)并写消息处理循环(get -> translate -> dispatch)
  */
 
 #include <windows.h>
-
+/**
+* @参数 hInstance 当前模块实例句柄
+* @参数 szCmdLine 字符串的形式包含命令行参数。
+* @参数 nCmdShow 是一个标志，指示主应用程序窗口是最小化、最大化还是正常显示.
+* */
  int WINAPI WinMain(HINSTANCE hInstance , HINSTANCE, PSTR szCmdLine , int nCmdShow)
 {
     const TCHAR szWndClassName[] = TEXT("Window Class Name");/*每个WNDCLASS都需要一个唯一标识的名字,该名称只需在当前进程中是唯一的。*/
@@ -46,3 +44,12 @@
         DispatchMessage(&msg);
     }
 }
+
+/**
+ * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-dispatchmessage">DispatchMessage</a>  它通常用于调度 GetMessage 函数检索到的消息。
+ * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-registerclassa">RegisterClass</a> 以便在调用 CreateWindow 或 CreateWindowEx 函数时使用
+ * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-createwindowa">CreateWindow</a> 内存中创建窗口
+ * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-showwindow">ShowWindow</a> 设置指定窗口的显示状态。
+ * @函数 <a href=""></a>
+ * @函数 <a href=""></a>
+*/
