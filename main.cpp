@@ -17,6 +17,7 @@
  */
 
 #include <windows.h>
+#include "WinProc.h"
 /**
 * @参数 hInstance 当前模块实例句柄
 * @参数 szCmdLine 字符串的形式包含命令行参数。
@@ -28,7 +29,7 @@
 
     WNDCLASS wndClass = {};//必须初始化,wndclass除了一下成员都可以初始化为0
     wndClass.hInstance = hInstance; //搬运一下当前模块实例
-    wndClass.lpfnWndProc = DefWindowProc;//设置窗口消息处理函数
+    wndClass.lpfnWndProc = WinProc;//设置窗口消息处理函数
     wndClass.lpszClassName = szWndClassName;//设置wndclass名称
 
     if(!RegisterClass(&wndClass))
@@ -38,7 +39,16 @@
     MSG msg;
 
     ShowWindow(hWnd,nCmdShow);
-    while(GetMessage(&msg,0,0,0)>0)
+
+    /**
+     * GetMessage
+     * @参数 lpMsg接受用来接收消息的MSG
+     * @参数 hWnd当前线程消息来源窗口,null为检查全部
+     * @参数 wMsgFilterMin 消息下界
+     * @参数 wMsgFilterMax 消息上界,上下界都为0则是没有界限
+     * @return 检测到WM_QUIT 消息就会返回false
+     */
+    while(GetMessage(&msg, nullptr,0,0))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
@@ -50,6 +60,6 @@
  * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-registerclassa">RegisterClass</a> 以便在调用 CreateWindow 或 CreateWindowEx 函数时使用
  * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-createwindowa">CreateWindow</a> 内存中创建窗口
  * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-showwindow">ShowWindow</a> 设置指定窗口的显示状态。
- * @函数 <a href=""></a>
- * @函数 <a href=""></a>
+ * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-getmessage">GetMessage</a> 从调用线程的消息队列中检索消息。 函数调度传入的已发送消息，直到已发布的消息可供检索。
+ * @函数 <a href="https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-translatemessage">TranslateMessage</a>函数与键盘输入相关。 它将击键 (键向下、向上键) 转换为字符。 你不必真正知道此函数的工作原理;
 */
