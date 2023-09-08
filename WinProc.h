@@ -5,7 +5,8 @@
 #ifndef LEARNWIN32_WINPROC_H
 #define LEARNWIN32_WINPROC_H
 #include <windows.h>
-
+#include <windowsx.h>
+#include <string>
 /**
  *
  * @param hWnd 窗口
@@ -27,6 +28,26 @@ LRESULT CALLBACK WinProc(HWND hWnd,UINT uMsg ,WPARAM wParam,LPARAM lParam)
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
+        case WM_KEYDOWN:
+            if(wParam == 'A')
+            {
+                SetWindowText(hWnd,TEXT("A Down"));
+            }
+            return 0;
+        case WM_KEYUP:
+            if(wParam=='A')
+            {
+                SetWindowText(hWnd,TEXT("A up"));
+            }
+            return 0;
+        case WM_LBUTTONDOWN:
+        {
+            int x , y;
+            x = GET_X_LPARAM(lParam);
+            y = GET_Y_LPARAM(lParam);
+            SetWindowText(hWnd,(std::to_wstring(x)+L','+std::to_wstring(y)).c_str());
+            return 0;
+        }
         default:
             return DefWindowProc(hWnd,uMsg,wParam,lParam);
     }
